@@ -34,14 +34,6 @@ jobs:
           PYTHON_VERSION: ${{ matrix.python-version }}
           cuda: ${{ matrix.cuda-version }}
           BOOST_VERSION: boost_1_77_0
-        if: |
-          (
-            (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags')) ) || 
-            (
-              (steps.changes.outputs.needbuild == 'true') && 
-              (env.PYTHON_VERSION == '3.10')
-            )
-          )
         shell: powershell
         run: |
           $ProgressPreference = 'SilentlyContinue'
@@ -54,13 +46,7 @@ jobs:
           PYTHON_VERSION: ${{ matrix.python-version }}
           cuda: ${{ matrix.cuda-version }}
         if: |
-          (env.CUDA_VERSION != '') && (
-            (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags')) ) || 
-            (
-              (steps.changes.outputs.needbuild == 'true') && 
-              (env.PYTHON_VERSION == '3.10')
-            )
-          )
+          (env.CUDA_VERSION != '')
         shell: powershell
         run: |
           .\tools\install_windows_cuda.ps1
@@ -82,14 +68,6 @@ jobs:
           PYTHON_VERSION: ${{ matrix.python-version }}
           BOOST_VERSION: boost_1_77_0
           CUMM_CUDA_VERSION: ${{ matrix.cuda-version }}
-        if: |
-          (env.CUDA_VERSION != '') && (
-            (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags')) ) || 
-            (
-              (steps.changes.outputs.needbuild == 'true') && 
-              (env.PYTHON_VERSION == '3.10')
-            )
-          )
         run: |
           $Env:CUMM_CUDA_ARCH_LIST = "all"
           $Env:SPCONV_DISABLE_JIT = "1"
