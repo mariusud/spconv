@@ -103,3 +103,6 @@ jobs:
       - name: install windows binary wheel
         run: | 
             pip install dist/*.whl
+            pip list | grep spconv
+            python -c "import spconv"
+            python -c "import spconv.pytorch"
